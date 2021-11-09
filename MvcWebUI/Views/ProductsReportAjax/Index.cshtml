@@ -1,0 +1,115 @@
+﻿@model ProductReportViewModel
+
+@{
+    ViewData["Title"] = "Product Report";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    @*<div class="col-2">
+            @await Component.InvokeAsync("Categories")
+        </div>*@
+    <div class="col-12">
+        <form asp-action="Index" data-ajax="true" data-ajax-method="post" data-ajax-mode="replacewith" data-ajax-update="#products" autocomplete="off" id="reportform">
+            @*<input asp-for="Filter.CategoryId" type="hidden"/>*@
+            <div class="row" style="padding-bottom: 20px;">
+                <div class="col-2">
+                    <label asp-for="Filter.CategoryId"></label>
+                </div>
+                <div class="col-4">
+                    <select asp-for="Filter.CategoryId" asp-items="Model.Categories" class="form-control">
+                        <option value="">-- All --</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <label asp-for="Filter.ProductName"></label>
+                </div>
+                <div class="col-4">
+                    <input asp-for="Filter.ProductName" class="form-control" />
+                </div>
+            </div>
+            <div class="row" style="padding-bottom: 20px;">
+                <div class="col-2">
+                    <label asp-for="Filter.UnitPriceStartText"></label>
+                </div>
+                <div class="col-4">
+                    <div class="input-group">
+                        <input asp-for="Filter.UnitPriceStartText" class="form-control" />
+                        <span class="input-group-text">-</span>
+                        <input asp-for="Filter.UnitPriceEndText" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-2">
+                    <label asp-for="Filter.StockAmountStart"></label>
+                </div>
+                <div class="col-4">
+                    <div class="input-group">
+                        <input asp-for="Filter.StockAmountStart" class="form-control" />
+                        <span class="input-group-text">-</span>
+                        <input asp-for="Filter.StockAmountEnd" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding-bottom: 20px;">
+                <div class="col-2">
+                    <label asp-for="Filter.ExpirationDateStartText"></label>
+                </div>
+                <div class="col-4">
+                    <div class="input-group">
+                        <input asp-for="Filter.ExpirationDateStartText" class="form-control expiration-date" />
+                        <span class="input-group-text">-</span>
+                        <input asp-for="Filter.ExpirationDateEndText" class="form-control expiration-date" />
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding-bottom: 20px;">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-outline-success">Search</button>
+                    &nbsp;&nbsp;&nbsp;
+                    <a asp-action="Index" class="btn btn-outline-warning">Clear</a>
+                </div>
+            </div>
+
+
+            <div id="products">
+                <partial name="_Products" model="Model" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <link href="~/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <script src="~/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.expiration-date').datepicker({
+                todayBtn: "linked",
+                orientation: "bottom auto",
+                autoclose: true,
+                todayHighlight: true
+            });
+
+            $(document).on("change", "#pagenumber", function () {
+                $("#reportform").submit();
+            });
+
+            $(document).on("click", ".orderbyexpressionlink", function (e) {
+                e.preventDefault();
+                $("#orderbyexpressioninput").val($(this).text());
+                var ascending = $("#orderbydirectioninput").val();
+                if (ascending === "True")
+                    ascending = "False";
+                else
+                    ascending = "True";
+                $("#orderbydirectioninput").val(ascending);
+                $("#reportform").submit();
+            });
+        });
+
+    </script>
+}

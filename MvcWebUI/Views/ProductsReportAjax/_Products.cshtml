@@ -1,0 +1,143 @@
+﻿@model ProductReportViewModel
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<div class="row" style="padding-bottom: 20px;">
+    <div class="col-2" style="text-align: left">
+        <select asp-for="PageNumber" class="form-control" asp-items="Model.PageNumbers" id="pagenumber"></select>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        @if (Model.Products != null && Model.Products.Count() > 0)
+        {
+            <p class="text-primary">
+                @{
+                    string count;
+                    if (Model.Products.Count() == 1)
+                        count = Model.Products.Count() + " product found";
+                    else
+                        count = Model.Products.Count() + " products found";
+                    @count
+                }
+            </p>
+            <input asp-for="OrderByExpression" type="hidden" id="orderbyexpressioninput" />
+            <input asp-for="OrderByDirectionAscending" type="hidden" id="orderbydirectioninput" />
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @{ string categoryDisplayName = Html.DisplayNameFor(model => model.Products.FirstOrDefault().CategoryName); }
+                            <a href="#" class="orderbyexpressionlink">@categoryDisplayName</a>
+                            &nbsp;
+                            @if (!string.IsNullOrWhiteSpace(Model.OrderByExpression) && Model.OrderByExpression == categoryDisplayName)
+                            {
+                                if (Model.OrderByDirectionAscending)
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-up"></i></span> }
+                                else
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-down"></i></span>}
+                            }
+                        </th>
+                        <th>
+                            @{ string productDisplayName = Html.DisplayNameFor(model => model.Products.FirstOrDefault().ProductName); }
+                            <a href="#" class="orderbyexpressionlink">@productDisplayName</a>
+                            &nbsp;
+                            @if (!string.IsNullOrWhiteSpace(Model.OrderByExpression) && Model.OrderByExpression == productDisplayName)
+                            {
+                                if (Model.OrderByDirectionAscending)
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-up"></i></span> }
+                                else
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-down"></i></span>}
+                            }
+                        </th>
+                        <th>
+                            @{ string unitPriceDisplayName = Html.DisplayNameFor(model => model.Products.FirstOrDefault().UnitPriceText); }
+                            <a href="#" class="orderbyexpressionlink">@unitPriceDisplayName</a>
+                            &nbsp;
+                            @if (!string.IsNullOrWhiteSpace(Model.OrderByExpression) && Model.OrderByExpression == unitPriceDisplayName)
+                            {
+                                if (Model.OrderByDirectionAscending)
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-up"></i></span> }
+                                else
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-down"></i></span>}
+                            }
+                        </th>
+                        <th>
+                            @{ string stockAmountDisplayName = Html.DisplayNameFor(model => model.Products.FirstOrDefault().StockAmount); }
+                            <a href="#" class="orderbyexpressionlink">@stockAmountDisplayName</a>
+                            &nbsp;
+                            @if (!string.IsNullOrWhiteSpace(Model.OrderByExpression) && Model.OrderByExpression == stockAmountDisplayName)
+                            {
+                                if (Model.OrderByDirectionAscending)
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-up"></i></span> }
+                                else
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-down"></i></span>}
+                            }
+                        </th>
+                        <th>
+                            @{ string expirationDateDisplayName = Html.DisplayNameFor(model => model.Products.FirstOrDefault().ExpirationDateText); }
+                            <a href="#" class="orderbyexpressionlink">@expirationDateDisplayName</a>
+                            &nbsp;
+                            @if (!string.IsNullOrWhiteSpace(Model.OrderByExpression) && Model.OrderByExpression == expirationDateDisplayName)
+                            {
+                                if (Model.OrderByDirectionAscending)
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-up"></i></span> }
+                                else
+                                {
+                                    <span class="text-primary"><i class="fas fa-sort-down"></i></span>}
+                            }
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Products)
+                    {
+                        <tr>
+                            <td>
+                                @if (string.IsNullOrWhiteSpace(item.CategoryDescription))
+                                {
+                                    @Html.DisplayFor(modelItem => item.CategoryName) }
+                                else
+                                {
+                                    <a title="@item.CategoryDescription" style="cursor: zoom-in;"><i class="fas fa-info-circle"></i> @item.CategoryName</a>
+                                }
+                            </td>
+                            <td>
+                                @if (string.IsNullOrWhiteSpace(item.ProductDescription))
+                                {
+                                    @Html.DisplayFor(modelItem => item.ProductName) }
+                                else
+                                {
+                                    <a title="@item.ProductDescription" style="cursor: zoom-in;"><i class="fas fa-info-circle"></i> @item.ProductName</a>
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UnitPriceText)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StockAmount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ExpirationDateText)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="text-danger">No products found</p>
+        }
+    </div>
+</div>

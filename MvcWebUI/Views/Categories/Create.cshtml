@@ -1,0 +1,17 @@
+﻿@model CategoryModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>Category</h4>
+<hr />
+
+<partial name="_CreateEdit" model="Model" />
+
+<div>
+    <a asp-action="Index">Back to Category List</a>
+</div>
+

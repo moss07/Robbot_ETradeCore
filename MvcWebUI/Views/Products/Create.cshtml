@@ -1,0 +1,32 @@
+﻿@model ProductModel
+
+@{
+    ViewData["Title"] = "Create Product";
+}
+
+<h1>Create</h1>
+
+<h4>Product</h4>
+<hr />
+
+<partial name="_CreateEdit" model="Model" />
+
+<div>
+    <a asp-action="Index">Back to Products</a>
+</div>
+
+@section Scripts
+{
+    <link href="~/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <script src="~/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+
+<script>
+    $('.expiration-date').datepicker({
+        todayBtn: "linked",
+        orientation: "top auto",
+        autoclose: true,
+        todayHighlight: true
+    });
+</script>
+}
+

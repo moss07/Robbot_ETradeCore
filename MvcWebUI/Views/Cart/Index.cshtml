@@ -1,0 +1,52 @@
+﻿@model IEnumerable<CartGroupByModel>
+
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (TempData["Message"] != null)
+{
+    <p class="bg-success text-white">@TempData["Message"]</p>
+}
+
+<p>
+    <a asp-action="ClearCart">Clear Cart</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalUnitPriceText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalProductCount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    $ @Html.DisplayFor(modelItem => item.TotalUnitPriceText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalProductCount)
+                </td>
+                <td>
+                    <a asp-action="RemoveFromCart" asp-route-productId="@item.ProductId" asp-route-userId="@item.UserId">Remove from Cart</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,27 @@
+﻿@model List<CategoryModel>
+
+@if (Model != null && Model.Count > 0)
+            {
+<table class="table">
+    <thead>
+        <tr>
+            <th>Categories</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <a asp-action="Index" asp-controller="ProductsReportAjax">-- All --</a>
+            </td>
+        </tr>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Index" asp-controller="ProductsReportAjax" asp-route-categoryId="@category.Id">@category.Name</a>
+                </td>
+            </tr> 
+        }
+    </tbody>
+</table>
+            }
